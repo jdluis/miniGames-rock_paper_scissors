@@ -15,12 +15,25 @@
         <a href="https://github.com/jdluis">My Github</a>
         <a href="https://www.linkedin.com/in/jdluis/">My Linkedin</a>
     </div>
-
+    
     <div class="container">
         <h1 class="title">Rock, Paper & Scissors</h1>
         <button id="start">START</button>
+        <div id="options">
+            <button id="rock" --data-value="0">ROCK</button>
+            <button id="paper" --data-value="1">PAPER</button>
+            <button id="scissors" --data-value="2">SCISSOR</button>
+        </div>
+        <button id="restart">Restart</button>
         <div class="results">
-            <p id="result"></p>
+            <div class="points">
+                <div >Player: <span id="playerPoints"></span></div>
+                <div >Computer: <span id="pcPoints"></span></div>
+            </div>
+            <p id="result">
+                Can you win the computer?
+                Press start for begin or select a option.
+            </p>
         </div>
     </div>
     <script src="app.js"></script>
