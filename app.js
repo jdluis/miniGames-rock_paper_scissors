@@ -1,14 +1,14 @@
 const piedra = 0;
 const papel = 1;
 const tijera = 2;
+
 const btnstart = document.getElementById("start");
+const resultDOM = document.getElementById("result");
 
 let player = null;
 let pc = null;
 
-let resultDOM = document.getElementById("result");
-
-function win(winner, looser, name) {
+function winStringToDOM(winner, looser, name) {
   resultDOM.innerText = "";
 
   switch (winner) {
@@ -34,10 +34,16 @@ function win(winner, looser, name) {
       looser = "scissors";
       break;
   }
-  if (!(name == "empate")) {
+
+  if (name != "empate" && name == "Player") {
     return (resultDOM.innerText = `
-    You select: ${winner}
+    Player select: ${winner}
     PC select: ${looser}
+    The winner is: ${name} `);
+  } else if (name != "empate" && name == "PC") {
+    return (resultDOM.innerText = `
+    Player select: ${looser}
+    PC select: ${winner}
     The winner is: ${name} `);
   } else {
     return (resultDOM.innerText = `
@@ -47,27 +53,28 @@ function win(winner, looser, name) {
   }
 }
 
-function getRandomInt(max) {
-  let number = Math.floor(Math.random() * max);
-  number == 0 ? number + 1 : number;
-  return number;
-}
-
 function winCondition() {
   if (player == pc) {
-    win(pc, player, "empate");
+    winStringToDOM(pc, player, "empate");
   } else if (player - pc == 1) {
-    win(player, pc, "Player");
+    winStringToDOM(player, pc, "Player");
   } else if (player - pc == -2) {
-    win(player, pc, "Player");
+    winStringToDOM(player, pc, "Player");
   } else {
-    win(pc, player, "PC");
+    winStringToDOM(pc, player, "PC");
   }
+}
+
+function getRandomInt(min, max) {
+  let number = Math.floor(Math.random() * (max - min) + min);
+  return number;
 }
 
 //START
 btnstart.addEventListener("click", () => {
-  player = getRandomInt(3);
-  pc = getRandomInt(3);
+  player = getRandomInt(0,3);
+  pc = getRandomInt(0,3);
+  console.log("pc" + ": " + pc)
+  console.log("player" + ": " + player)
   winCondition(player, pc);
 });
