@@ -1,17 +1,50 @@
-const nonValid = 0;
-const piedra = 1;
-const papel = 2;
-const tijera = 3;
+const piedra = 0;
+const papel = 1;
+const tijera = 2;
 const btnstart = document.getElementById("start");
 
-let resultPlayer1 = null;
-let resultPlayer2 = null;
+let player = null;
+let pc = null;
 
 let resultDOM = document.getElementById("result");
 
-function winner(player) {
-    resultDOM.innerText = "";
-  return resultDOM.innerText = `El ganador es: ${player}`;
+function win(winner, looser, name) {
+  resultDOM.innerText = "";
+
+  switch (winner) {
+    case piedra:
+      winner = "rock";
+      break;
+    case papel:
+      winner = "paper";
+      break;
+    case tijera:
+      winner = "scissors";
+      break;
+  }
+
+  switch (looser) {
+    case piedra:
+      looser = "rock";
+      break;
+    case papel:
+      looser = "paper";
+      break;
+    case tijera:
+      looser = "scissors";
+      break;
+  }
+  if (!(name == "empate")) {
+    return (resultDOM.innerText = `
+    You select: ${winner}
+    PC select: ${looser}
+    The winner is: ${name} `);
+  } else {
+    return (resultDOM.innerText = `
+    You select: ${winner}
+    PC select: ${looser}
+    Try again: ${name} `);
+  }
 }
 
 function getRandomInt(max) {
@@ -20,35 +53,21 @@ function getRandomInt(max) {
   return number;
 }
 
-
-function winCondition (resultPlayer1, resultPlayer2) {
-  if (resultPlayer1 == tijera && resultPlayer2 == papel) {
-    winner("Player1");
-  } else if (resultPlayer2 == piedra && resultPlayer1 == tijera) {
-    winner("Player 2");
-  } else  if (resultPlayer1 == papel && resultPlayer2 == piedra) {
-    winner("Player1");
-  } else if (resultPlayer2 == piedra && resultPlayer1 == tijera) {
-    winner("Player 2");
-  } else  if (resultPlayer1 == piedra && resultPlayer2 == tijera) {
-    winner("Player1");
-  } else if (resultPlayer2 == piedra && resultPlayer1 == tijera) {
-    winner("Player 2");
+function winCondition() {
+  if (player == pc) {
+    win(pc, player, "empate");
+  } else if (player - pc == 1) {
+    win(player, pc, "Player");
+  } else if (player - pc == -2) {
+    win(player, pc, "Player");
   } else {
-    resultDOM.innerText = "Ups";
+    win(pc, player, "PC");
   }
 }
 
-function play() {
-    btnstart.addEventListener("click", () => {
-      randomResult1 = getRandomInt(3);
-      randomResult2 =  getRandomInt(3);
-
-      randomResult1 == randomResult2 && randomResult2 <= 3  ? randomResult2 - 1 : randomResult2;
-      console.log(`Player 1: ${randomResult1}`);
-      console.log(`Player 2: ${randomResult2}`);
-      winCondition(randomResult1,randomResult2);
-  });
-}
-
-play();
+//START
+btnstart.addEventListener("click", () => {
+  player = getRandomInt(3);
+  pc = getRandomInt(3);
+  winCondition(player, pc);
+});
